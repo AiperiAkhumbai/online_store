@@ -8,5 +8,5 @@ class ProductSerializers(serializers.ModelSerializer):
   
     class Meta:
         model = Product
-        exclude = ('stock','created_at', 'updated_at')
+        fields = '__all__'
 
