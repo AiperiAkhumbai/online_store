@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.db.models import Max, Min
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
+from rest_framework.decorators import action
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import AllowAny, IsAdminUser
 
@@ -34,11 +35,11 @@ class ProductSetPagination(PageNumberPagination):
 
 class ProductViewSet(viewsets.ModelViewSet):
 
-        pagination_class = ProductSetPagination
         serializer_class = ProductSerializers
         queryset = Product.objects.all()
+        pagination_class = ProductSetPagination
         filter_backends = (filters.SearchFilter,)
-        search_fields = ('name', 'category','price')
+        search_fields = ('name')
 
         def get_permissions(self):
             if self.action == 'list':
@@ -47,4 +48,13 @@ class ProductViewSet(viewsets.ModelViewSet):
                 permission_classes = [IsAdminUser]
             return [permission() for permission in permission_classes]
 
+
+        @action(detail=False, methods=['get'])         
+        def search(self, request, pk=None):
+            q = request.query_params.get('q')
+            queryset = self.get_queryset()
+            queryset = queryset.filter(Q(name__icontains=q) |
+                                   Q(description__icontains=q))
+            serializer = ProductSerializers(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         
