@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'category.apps.CategoryConfig',
     'product.apps.ProductConfig',
+    'order.apps.OrderConfig',
 ]
 
 SITE_ID = 1
