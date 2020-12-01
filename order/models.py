@@ -8,8 +8,7 @@ class Order(models.Model):
     items = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_items')
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='orders')
     created_at = models.DateTimeField(auto_now_add=True)
-    ordered_at = models.DateTimeField()
-
+    
 
     class Meta:
         ordering = ['-created_at']

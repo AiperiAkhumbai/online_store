@@ -7,6 +7,5 @@ router = DefaultRouter()
 router.register('profile', UserProfileViewSet)
 router.register('login', LoginViewSet, basename='login')
 
-
 urlpatterns = router.urls 
 

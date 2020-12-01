@@ -11,6 +11,8 @@ from .models import Product
 from .serializers import ProductSerializers
 
 
+''' Pagination by page -- 2 product in one page'''
+
 class ProductSetPagination(PageNumberPagination):
     page_size = 2
 
@@ -27,6 +29,8 @@ class ProductSetPagination(PageNumberPagination):
             'data': data
         })
 
+
+''' Everybody can see list of products and Admin can do CRUD '''
 
 class ProductViewSet(viewsets.ModelViewSet):
 
